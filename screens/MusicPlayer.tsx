@@ -1,27 +1,62 @@
-import React from 'react'
-import { View, SafeAreaView, StyleSheet, TouchableOpacity, Dimensions, Image, Text } from 'react-native'
+import React, { useRef, useState, useEffect } from 'react'
+import { Animated, View, SafeAreaView, StyleSheet, TouchableOpacity, Dimensions, Image, Text, FlatList } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Slider from '@react-native-community/slider';
 
+import songs from '../model/data';
 
 const { width } = Dimensions.get('window')
 
 const MusicPlayer = () => {
-  return (
-    <SafeAreaView style={style.container}>
-      <View style={style.mainContainer}>
-        {/* image */}
+
+  const [songsIndex, setSongsIndex] = useState(0)
+  const scrollX = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    scrollX.addListener(({ value }) => {
+      const index = Math.round(value / width);
+      setSongsIndex(index)
+    })
+  }, [])
+
+  const RenderSongs = ({ item, index }: any) => {
+    return (
+      <Animated.View style={style.imageWrapperMain}>
         <View style={style.imageWrapper}>
           <Image
             style={style.image}
-            source={require('../assets/img/img1.jpg')}
+            source={item.artwork}
           />
         </View>
+      </Animated.View>
+    )
+  }
+
+  return (
+    <SafeAreaView style={style.container}>
+      <View style={style.mainContainer}>
+
+        <Animated.FlatList
+          data={songs}
+          renderItem={RenderSongs}
+          keyExtractor={(item: any) => item.id}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={16}
+          onScroll={Animated.event([{
+            nativeEvent: {
+              contentOffset: {
+                x: scrollX
+              }
+            }
+          }], { useNativeDriver: true })}
+        />
 
         {/* Song content */}
         <View>
-          <Text style={[style.songTitle, style.songContent]}> Arghavan </Text>
-          <Text style={[style.songArtist, style.songContent]}> alireza ghorbany </Text>
+          <Text style={[style.songTitle, style.songContent]}> {songs[songsIndex].title} </Text>
+          <Text style={[style.songArtist, style.songContent]}> {songs[songsIndex].artist} </Text>
         </View>
 
         {/* slider */}
@@ -115,6 +150,11 @@ const style = StyleSheet.create({
     height: 340,
     marginBottom: 25
   },
+  imageWrapperMain: {
+    width: width,
+    justifyContent: 'center',
+    alignItems: "center"
+  },
   image: {
     width: '100%',
     height: '100%',
@@ -153,5 +193,6 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 15,
+    marginBottom: 25
   }
 })

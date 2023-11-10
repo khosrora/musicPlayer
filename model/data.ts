@@ -1,8 +1,8 @@
-type SongsItem = {
+export type SongsItem = {
     id: number,
     title: string,
     artist: string,
-    artwork: () => {},
+    artwork: any,
     url: string
 }
 
