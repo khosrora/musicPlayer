@@ -1,13 +1,33 @@
 import React from 'react'
-import { View, SafeAreaView, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
+import { View, SafeAreaView, StyleSheet, TouchableOpacity, Dimensions, Image, Text } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const { width, height } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
 const MusicPlayer = () => {
   return (
     <SafeAreaView style={style.container}>
       <View style={style.mainContainer}>
+        {/* image */}
+        <View style={style.imageWrapper}>
+          <Image
+            style={style.image}
+            source={require('../assets/img/img1.jpg')}
+          />
+        </View>
+
+        {/* Song content */}
+        <View>
+          <Text style={[style.songTitle , style.songContent]}> Arghavan </Text>
+          <Text style={[style.songArtist , style.songContent]}> alireza ghorbany </Text>
+        </View>
+
+        {/* slider */}
+
+
+
+
+
       </View>
       <View style={style.bottomContainer}>
         <View style={style.bottomIconWrapper}>
@@ -53,4 +73,27 @@ const style = StyleSheet.create({
     justifyContent: "space-between",
     width: "80%"
   },
+  imageWrapper: {
+    width: 300,
+    height: 340,
+    marginBottom: 25
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 15
+  },
+  songContent: {
+    color: "#EEEEEE",
+
+  },
+  songArtist: {
+    textAlign: 'center',
+    fontWeight: '300'
+  },
+  songTitle: {
+    textAlign: 'center',
+    marginBottom: 4,
+    fontSize: 18
+  }
 })
