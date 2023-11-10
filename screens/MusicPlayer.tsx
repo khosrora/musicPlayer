@@ -1,6 +1,8 @@
 import React from 'react'
 import { View, SafeAreaView, StyleSheet, TouchableOpacity, Dimensions, Image, Text } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Slider from '@react-native-community/slider';
+
 
 const { width } = Dimensions.get('window')
 
@@ -18,12 +20,47 @@ const MusicPlayer = () => {
 
         {/* Song content */}
         <View>
-          <Text style={[style.songTitle , style.songContent]}> Arghavan </Text>
-          <Text style={[style.songArtist , style.songContent]}> alireza ghorbany </Text>
+          <Text style={[style.songTitle, style.songContent]}> Arghavan </Text>
+          <Text style={[style.songArtist, style.songContent]}> alireza ghorbany </Text>
         </View>
 
         {/* slider */}
+        <View>
+          <Slider
+            style={style.progresBar}
+            value={10}
+            minimumValue={0}
+            maximumValue={100}
+            thumbTintColor='#FFD369'
+            minimumTrackTintColor="#FFD369"
+            maximumTrackTintColor="#fff"
+            onSlidingComplete={() => { }}
+          />
 
+          {/* progress durations */}
+          <View style={style.progressLevelDuration}>
+            <Text style={style.progressTime}>00:00</Text>
+            <Text style={style.progressTime}>00:00</Text>
+          </View>
+
+
+          {/* Music Controlls Containr */}
+          <View style={style.musicControllsContainer}>
+
+            <TouchableOpacity onPress={() => { }}>
+              <Ionicons size={24} color="#FFD369" name="play-skip-back-outline" />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => { }}>
+              <Ionicons size={48} color="#FFD369" name="pause-circle" />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => { }}>
+              <Ionicons size={24} color="#FFD369" name="play-skip-forward-outline" />
+            </TouchableOpacity>
+
+          </View>
+        </View>
 
 
 
@@ -95,5 +132,26 @@ const style = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 4,
     fontSize: 18
+  },
+  progresBar: {
+    width: 350,
+    height: 40,
+    marginTop: 25,
+    flexDirection: 'row'
+  },
+  progressLevelDuration: {
+    width: 340,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  progressTime: {
+    color: '#fff',
+    fontWeight: '500'
+  },
+  musicControllsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 15,
   }
 })
